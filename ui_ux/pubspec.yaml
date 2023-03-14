@@ -66,8 +66,6 @@ dev_dependencies:
   shared_preferences: ^0.5.8
   translator: ^0.1.5
 
-# For information on the generic Dart part of this file, see the
-# following page: https://dart.dev/tools/pub/pubspec
 
 # The following section is specific to Flutter packages.
 flutter:
