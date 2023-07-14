@@ -1,5 +1,7 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:kofi_project/screens/video_list_screen.dart';
+import 'package:kofi_project/utilities.dart';
 import 'package:video_player/video_player.dart';
 
 import '../widgets/text_input_field.dart';
@@ -90,7 +92,8 @@ class _ConfirmScreenState extends State<ConfirmScreen> {
                         shape:
                     RoundedRectangleBorder(borderRadius: BorderRadius.circular(10))),
                     onPressed: (){
-
+                      Utilities.showToast("Video uploaded successfully");
+                    Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (_)=>VideoListScreen()));
                     },
                       child: const Text(
                         'Share!',
