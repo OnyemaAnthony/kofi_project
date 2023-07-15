@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:kofi_project/screens/image_list_screen.dart';
 import 'package:kofi_project/screens/video_list_screen.dart';
+import 'package:kofi_project/widgets/footer.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -10,7 +11,7 @@ class HomeScreen extends StatelessWidget {
     return Scaffold(
         backgroundColor: Colors.white,
         appBar: PreferredSize(
-          preferredSize: Size.fromHeight(100.0), // here the desired height
+          preferredSize: const Size.fromHeight(100.0), // here the desired height
           child: AppBar(
             backgroundColor: Colors.white,
             elevation: 0.0,
@@ -21,47 +22,53 @@ class HomeScreen extends StatelessWidget {
             ),
           ),
         ),
-        body: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          // mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
-                Container(
-                  width: 100,
-                  height: 100,
-                  decoration: const BoxDecoration(
-                    color: Colors.black,
-                  ),
-                  child: ElevatedButton(
-                    style:
-                        ElevatedButton.styleFrom(backgroundColor: Colors.black),
-                    onPressed: () {
-                      Navigator.of(context).push(MaterialPageRoute(builder: (_)=> const VideoListScreen()));
+        body: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  Container(
+                    width: 100,
+                    height: 100,
+                    decoration: const BoxDecoration(
+                      color: Colors.black,
+                    ),
+                    child: ElevatedButton(
+                      style:
+                          ElevatedButton.styleFrom(backgroundColor: Colors.black),
+                      onPressed: () {
+                        Navigator.of(context).push(MaterialPageRoute(builder: (_)=> const VideoListScreen()));
+                        Navigator.of(context).push(MaterialPageRoute(builder: (_)=> const VideoListScreen()));
 
-                    },
-                    child: const Text("Videos"),
+                      },
+                      child: const Text("Videos"),
+                    ),
                   ),
-                ),
-                Container(
-                  width: 100,
-                  height: 100,
-                  decoration: const BoxDecoration(
-                    color: Colors.black,
+                  Container(
+                    width: 100,
+                    height: 100,
+                    decoration: const BoxDecoration(
+                      color: Colors.black,
+                    ),
+                    child: ElevatedButton(
+                      style:
+                      ElevatedButton.styleFrom(backgroundColor: Colors.black),
+                      onPressed: () {
+                        Navigator.of(context).push(MaterialPageRoute(builder: (_)=> const ImageListScreen()));
+                      },
+                      child: const Text("Photos"),
+                    ),
                   ),
-                  child: ElevatedButton(
-                    style:
-                    ElevatedButton.styleFrom(backgroundColor: Colors.black),
-                    onPressed: () {
-                      Navigator.of(context).push(MaterialPageRoute(builder: (_)=> const ImageListScreen()));
-                    },
-                    child: const Text("Photos"),
-                  ),
-                )
-              ],
-            ),
-          ],
-        ));
+                ],
+              ),
+              SizedBox(height: 10,),
+              Footer(),
+
+            ],
+          ),
+        ),);
   }
 }
