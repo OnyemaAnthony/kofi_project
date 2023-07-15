@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
+import 'package:kofi_project/widgets/footer.dart';
 
 import '../widgets/dummy.dart';
 import '../widgets/video_card.dart';
@@ -29,6 +30,8 @@ class _MyPhotosScreenState extends State<MyPhotosScreen> {
                 Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (_)=>MyPhotosScreen()));
               },
                 child: Image.asset('assets/images/logo_light.jpg',width: 150,height: 100,)),
+            const Text('My Photos',style: TextStyle(color:Colors.black),)
+
           ],
         ),
         elevation: 0.0,
@@ -39,7 +42,7 @@ class _MyPhotosScreenState extends State<MyPhotosScreen> {
         backgroundColor: Colors.black,
         onPressed: ()async{
           await Future.delayed(const Duration(milliseconds: 300));
-          SchedulerBinding.instance?.addPostFrameCallback((_) {
+          SchedulerBinding.instance.addPostFrameCallback((_) {
             _scrollController.animateTo(
                 _scrollController.position.minScrollExtent,
                 duration: const Duration(milliseconds: 400),
@@ -56,6 +59,9 @@ class _MyPhotosScreenState extends State<MyPhotosScreen> {
         itemCount: videos.length,
         itemBuilder: (context, index) {
           VideoCard videoCard = videos[index];
+          if(index == videos.length-1){
+            return Footer();
+          }
           return Container(
             margin: const EdgeInsets.all(10.0),
             child: ClipRRect(

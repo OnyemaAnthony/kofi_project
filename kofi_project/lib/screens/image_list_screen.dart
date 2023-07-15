@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:kofi_project/widgets/image_drawer.dart';
-
-import '../widgets/drawer_item.dart';
 import '../widgets/dummy.dart';
+import '../widgets/footer.dart';
 import '../widgets/video_card.dart';
 
 class ImageListScreen extends StatefulWidget {
@@ -14,6 +13,7 @@ class ImageListScreen extends StatefulWidget {
 
 class _ImageListScreenState extends State<ImageListScreen> {
   final GlobalKey<ScaffoldState> _key = GlobalKey(); // Create a key
+  bool isBottom = false;
 
   @override
   Widget build(BuildContext context) {
@@ -21,8 +21,19 @@ class _ImageListScreenState extends State<ImageListScreen> {
     return Scaffold(
       key: _key,
       appBar: AppBar(
+        backgroundColor: Colors.white,
+        elevation: 0.0,
         automaticallyImplyLeading: false,
-        title: const Text("Welcome Anthony"),
+        //title: const Text("Welcome Anthony"),
+        title: Row(
+          children: [
+            GestureDetector(
+                onTap: (){
+                  Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (_)=>ImageListScreen()));
+                },
+                child: Image.asset('assets/images/logo_light.jpg',width: 150,height: 100,)),
+          ],
+        ),
         actions: [
           GestureDetector(
               onTap: (){
@@ -30,19 +41,35 @@ class _ImageListScreenState extends State<ImageListScreen> {
               },
               child: const Padding(
                 padding: EdgeInsets.all(15),
-                child: Icon(Icons.menu),
+                child: Icon(Icons.menu,color: Colors.black,),
               ))
         ],
       ),
       drawer:ImageDrawer(),
-      body: SafeArea(
-        child: Container(
-          padding: const EdgeInsets.only(top: 20),
-          color: const Color(0xffD9D9D9),
+      body: Container(
+        padding: const EdgeInsets.only(top: 20),
+        color: const Color(0xffD9D9D9),
+        child: NotificationListener<ScrollEndNotification>(
+          onNotification: (scrollEnd) {
+            final metrics = scrollEnd.metrics;
+            if (metrics.atEdge) {
+              bool isTop = metrics.pixels == 0;
+              if (isTop) {
+                print('At the top');
+              } else {
+                setState(() {
+                  isBottom = true;
+                  isBottom = false;
+
+                });
+              }
+            }
+            return true;
+          },
           child: GridView.builder(
               shrinkWrap: true,
-              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 3,
+              gridDelegate:  SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: isBottom?1:3,
                 childAspectRatio: 7/9,
                 mainAxisSpacing: 10,
                 crossAxisSpacing: 2,
@@ -51,6 +78,10 @@ class _ImageListScreenState extends State<ImageListScreen> {
               itemCount: videos.length,
               itemBuilder: (BuildContext context, index) {
                 VideoCard video = videos[index];
+                if(isBottom){
+                  return Footer();
+                }
+
                 return GestureDetector(
                   onTap: (){
                   },

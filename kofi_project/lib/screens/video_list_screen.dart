@@ -3,6 +3,7 @@ import 'package:kofi_project/widgets/drawer_item.dart';
 import 'package:kofi_project/widgets/video_card.dart';
 
 import '../widgets/dummy.dart';
+import '../widgets/footer.dart';
 
 class VideoListScreen extends StatefulWidget {
   const VideoListScreen({Key? key}) : super(key: key);
@@ -21,8 +22,19 @@ class _VideoListScreenState extends State<VideoListScreen> {
     return Scaffold(
       key: _key,
       appBar: AppBar(
+        backgroundColor: Colors.white,
+        elevation: 0.0,
         automaticallyImplyLeading: false,
-        title: const Text("Welcome Anthony"),
+        title: Row(
+          children: [
+            GestureDetector(
+                onTap: (){
+                  Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (_)=>VideoListScreen()));
+                },
+                child: Image.asset('assets/images/logo_light.jpg',width: 150,height: 100,)),
+
+          ],
+        ),
         actions: [
           GestureDetector(
             onTap: (){
@@ -30,7 +42,7 @@ class _VideoListScreenState extends State<VideoListScreen> {
             },
               child: const Padding(
                 padding: EdgeInsets.all(15),
-                child: Icon(Icons.menu),
+                child: Icon(Icons.menu,color: Colors.black,),
               ))
         ],
       ),
@@ -51,6 +63,7 @@ class _VideoListScreenState extends State<VideoListScreen> {
               itemCount: videos.length,
               itemBuilder: (BuildContext context, index) {
                 VideoCard video = videos[index];
+
                 return GestureDetector(
                   onTap: (){
                   },

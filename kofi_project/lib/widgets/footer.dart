@@ -8,7 +8,6 @@ class Footer extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       padding: const EdgeInsets.all(10),
-      height: 800,
       width: 2000,
       color: Colors.black,
       child: Column(
