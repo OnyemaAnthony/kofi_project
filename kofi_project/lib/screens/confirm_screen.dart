@@ -8,11 +8,9 @@ import '../widgets/text_input_field.dart';
 
 class ConfirmScreen extends StatefulWidget {
   final File videoFile;
-  final String videoPath;
   const ConfirmScreen({
     Key? key,
     required this.videoFile,
-    required this.videoPath,
   }) : super(key: key);
 
   @override
@@ -93,7 +91,7 @@ class _ConfirmScreenState extends State<ConfirmScreen> {
                     RoundedRectangleBorder(borderRadius: BorderRadius.circular(10))),
                     onPressed: (){
                       Utilities.showToast("Video uploaded successfully");
-                    Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (_)=>VideoListScreen()));
+                    Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (_)=>const VideoListScreen()));
                     },
                       child: const Text(
                         'Share!',

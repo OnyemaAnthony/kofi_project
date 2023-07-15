@@ -2,55 +2,55 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:kofi_project/screens/confirm_image_screen.dart';
+import 'package:kofi_project/screens/my_photos_screen.dart';
 import 'package:kofi_project/screens/my_vieos_screen.dart';
 
 import '../screens/confirm_screen.dart';
 
-class DrawerItem extends StatefulWidget {
-   DrawerItem({Key? key}) : super(key: key);
+class ImageDrawer extends StatefulWidget {
+  ImageDrawer({Key? key}) : super(key: key);
 
   @override
-  State<DrawerItem> createState() => _DrawerItemState();
+  State<ImageDrawer> createState() => _ImageDrawerState();
 }
 
-class _DrawerItemState extends State<DrawerItem> {
-  String cat = "Select video category";
+class _ImageDrawerState extends State<ImageDrawer> {
   @override
   Widget build(BuildContext context) {
     return  Drawer(
       child: Column(
         children: [
+          Divider(),
           SizedBox(
             height: 200,
             width: MediaQuery.of(context).size.width,
-           child: Image.asset('assets/images/logo_light.jpg'),
+            child: Image.asset('assets/images/logo_light.jpg'),
           ),
           Container(
               margin: const EdgeInsets.only(top: 10),
               color: Colors.grey.shade300,
 
-              child: drawerChild("Add video", Icons.upload, () {
+              child: drawerChild("Add photos", Icons.upload, () {
                 showOptionsDialog(context);
 
               })),
 
-          drawerChild("View uploaded videos", Icons.video_call, () {
-            Navigator.of(context).push(MaterialPageRoute(builder: (_)=>MyVideosScreen()));
+          drawerChild("View uploaded Photos", Icons.video_call, () {
+            Navigator.of(context).push(MaterialPageRoute(builder: (_)=>MyPhotosScreen()));
           }),
-
-          dropdownContainer(context),
 
         ],
       ),
     );
   }
   pickVideo(ImageSource src, BuildContext context) async {
-    final video = await ImagePicker().pickVideo(source: src);
-    if (video != null) {
+    final image = await ImagePicker().pickImage(source: src);
+    if (image != null) {
       Navigator.of(context).push(
         MaterialPageRoute(
-          builder: (context) => ConfirmScreen(
-            videoFile: File(video.path),
+          builder: (context) => ConfirmImageScreen(
+            imageFile: File(image.path),
           ),
         ),
       );
@@ -125,52 +125,16 @@ class _DrawerItemState extends State<DrawerItem> {
 
   Container dropdownContainer(BuildContext context) {
     return Container(
-     // margin: EdgeInsets.only(top: 0, left: 16.0, right: 16.0),
+      // margin: EdgeInsets.only(top: 0, left: 16.0, right: 16.0),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: <Widget>[
-          SizedBox(width: 12,),
+          const SizedBox(width: 12,),
           Icon(
             Icons.category,
             color: Colors.grey.shade600,
           ),
-          Container(
-            //margin: const EdgeInsets.only(top: 0, left: 10.0, right: 0),
-            child: DropdownButtonHideUnderline(
-              child: DropdownButton<String>(
-                hint:  Text(
-                  cat,
-                  style: const TextStyle(
-                    color: Colors.black,
-                    fontSize: 15.0,
-                  ),
-                ),
-                onChanged: (t){
-                  print(t);
-                  setState(() {
-                    t = cat;
-                  });
 
-                },
-
-                items: categories.map<DropdownMenuItem<String>>((setLanguage) =>
-                    DropdownMenuItem<String>(
-                      value: setLanguage,
-                      child: Row(
-                        //mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        children: <Widget>[
-                          Text(setLanguage),
-                          Text(
-                            setLanguage,
-                            style: TextStyle(fontSize: 20),
-                          )
-                        ],
-                      ),
-                    ))
-                    .toList(),
-              ),
-            ),
-          ),
         ],
       ),
     );
