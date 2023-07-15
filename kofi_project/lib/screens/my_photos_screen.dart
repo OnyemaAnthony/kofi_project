@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:kofi_project/widgets/footer.dart';
-
 import '../widgets/dummy.dart';
 import '../widgets/video_card.dart';
 
@@ -36,7 +35,6 @@ class _MyPhotosScreenState extends State<MyPhotosScreen> {
         ),
         elevation: 0.0,
         backgroundColor: Colors.white,
-        //title: const Text("My Photos",style: TextStyle(color: Colors.black),),
       ),
       floatingActionButton: FloatingActionButton(
         backgroundColor: Colors.black,

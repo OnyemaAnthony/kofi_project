@@ -37,9 +37,6 @@ class _DrawerItemState extends State<DrawerItem> {
           drawerChild("View uploaded videos", Icons.video_call, () {
             Navigator.of(context).push(MaterialPageRoute(builder: (_)=>MyVideosScreen()));
           }),
-
-          dropdownContainer(context),
-
         ],
       ),
     );
@@ -121,60 +118,6 @@ class _DrawerItemState extends State<DrawerItem> {
     );
   }
 
-  List<String> categories = ['Food', 'Entertainment', 'politics'];
-
-  Container dropdownContainer(BuildContext context) {
-    return Container(
-     // margin: EdgeInsets.only(top: 0, left: 16.0, right: 16.0),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceAround,
-        children: <Widget>[
-          SizedBox(width: 12,),
-          Icon(
-            Icons.category,
-            color: Colors.grey.shade600,
-          ),
-          Container(
-            //margin: const EdgeInsets.only(top: 0, left: 10.0, right: 0),
-            child: DropdownButtonHideUnderline(
-              child: DropdownButton<String>(
-                hint:  Text(
-                  cat,
-                  style: const TextStyle(
-                    color: Colors.black,
-                    fontSize: 15.0,
-                  ),
-                ),
-                onChanged: (t){
-                  print(t);
-                  setState(() {
-                    t = cat;
-                  });
-
-                },
-
-                items: categories.map<DropdownMenuItem<String>>((setLanguage) =>
-                    DropdownMenuItem<String>(
-                      value: setLanguage,
-                      child: Row(
-                        //mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        children: <Widget>[
-                          Text(setLanguage),
-                          Text(
-                            setLanguage,
-                            style: TextStyle(fontSize: 20),
-                          )
-                        ],
-                      ),
-                    ))
-                    .toList(),
-              ),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
 }
 
 

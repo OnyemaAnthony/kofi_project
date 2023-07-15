@@ -2,6 +2,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:kofi_project/screens/video_list_screen.dart';
 import 'package:kofi_project/utilities.dart';
+import 'package:kofi_project/widgets/submit_button.dart';
 import 'package:video_player/video_player.dart';
 
 import '../widgets/text_input_field.dart';
@@ -18,6 +19,7 @@ class ConfirmScreen extends StatefulWidget {
 }
 
 class _ConfirmScreenState extends State<ConfirmScreen> {
+  String selectedCategory = 'Food';
   late VideoPlayerController controller;
   TextEditingController _songController = TextEditingController();
   TextEditingController _captionController = TextEditingController();
@@ -29,9 +31,9 @@ class _ConfirmScreenState extends State<ConfirmScreen> {
       controller = VideoPlayerController.file(widget.videoFile);
     });
     controller.initialize();
-    controller.play();
-    controller.setVolume(1);
-    controller.setLooping(true);
+    // controller.play();
+    // controller.setVolume(1);
+    // controller.setLooping(true);
   }
 
   @override
@@ -39,6 +41,7 @@ class _ConfirmScreenState extends State<ConfirmScreen> {
     super.dispose();
     controller.dispose();
   }
+  List<String> categories = ['Food', 'Entertainment', 'politics'];
 
   @override
   Widget build(BuildContext context) {
@@ -48,7 +51,7 @@ class _ConfirmScreenState extends State<ConfirmScreen> {
           children: [
             SizedBox(
               width: MediaQuery.of(context).size.width,
-              height: MediaQuery.of(context).size.height / 1.5,
+              height: MediaQuery.of(context).size.height *0.5,
               child: VideoPlayer(controller),
             ),
             const SizedBox(
@@ -57,7 +60,8 @@ class _ConfirmScreenState extends State<ConfirmScreen> {
             SingleChildScrollView(
               scrollDirection: Axis.vertical,
               child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
                   Container(
                     margin: const EdgeInsets.symmetric(horizontal: 10),
@@ -83,28 +87,89 @@ class _ConfirmScreenState extends State<ConfirmScreen> {
                   const SizedBox(
                     height: 10,
                   ),
-                  ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      padding: const EdgeInsets.symmetric(horizontal: 20),
-                        
-                        shape:
-                    RoundedRectangleBorder(borderRadius: BorderRadius.circular(10))),
-                    onPressed: (){
-                      Utilities.showToast("Video uploaded successfully");
-                    Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (_)=>const VideoListScreen()));
+                  DropdownButton(
+                    padding: EdgeInsets.all(20),
+
+                    hint: const Text('Please choose a location'), // Not necessary for Option 1
+                    value: selectedCategory,
+                    onChanged: (newValue) {
+                      setState(() {
+                        selectedCategory = newValue!;
+                      });
                     },
-                      child: const Text(
-                        'Share!',
-                        style: TextStyle(
-                          fontSize: 20,
-                          color: Colors.white,
-                        ),
-                      ))
+                    items: categories.map((category) {
+                      return DropdownMenuItem(
+                        
+                        value: category,
+                        child:  Text(category),
+                      );
+                    }).toList(),
+                  ),
+
+
+                  //dropdownContainer(context),
+
+                  Container(
+                    margin: EdgeInsets.all(20),
+                    child: SubmitButton(text: "Upload", onPress: (){
+                          Utilities.showToast("Video uploaded successfully");
+                        Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (_)=>const VideoListScreen()));
+
+                    }),
+                  )
                 ],
               ),
             )
           ],
         ),
+      ),
+    );
+  }
+  Container dropdownContainer(BuildContext context) {
+    return Container(
+      // margin: EdgeInsets.only(top: 0, left: 16.0, right: 16.0),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: <Widget>[
+          //const SizedBox(width: 12,),
+          Container(
+            //margin: const EdgeInsets.only(top: 0, left: 10.0, right: 0),
+            child: DropdownButtonHideUnderline(
+              child: DropdownButton<String>(
+                hint:  Text(
+                  "Category",
+                  style: const TextStyle(
+                    color: Colors.black,
+                    fontSize: 15.0,
+                  ),
+                ),
+                onChanged: (t){
+                  print(t);
+                  setState(() {
+                    //t = cat;
+                  });
+
+                },
+
+                items: categories.map<DropdownMenuItem<String>>((setLanguage) =>
+                    DropdownMenuItem<String>(
+                      value: setLanguage,
+                      child: Row(
+                        //mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: <Widget>[
+                          Text(setLanguage),
+                          Text(
+                            setLanguage,
+                            style: TextStyle(fontSize: 20),
+                          )
+                        ],
+                      ),
+                    ))
+                    .toList(),
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }
