@@ -31,9 +31,9 @@ class _ConfirmScreenState extends State<ConfirmScreen> {
       controller = VideoPlayerController.file(widget.videoFile);
     });
     controller.initialize();
-    // controller.play();
-    // controller.setVolume(1);
-    // controller.setLooping(true);
+    controller.play();
+    controller.setVolume(1);
+    controller.setLooping(true);
   }
 
   @override
@@ -88,7 +88,7 @@ class _ConfirmScreenState extends State<ConfirmScreen> {
                     height: 10,
                   ),
                   DropdownButton(
-                    padding: EdgeInsets.all(20),
+                    padding: const EdgeInsets.all(20),
 
                     hint: const Text('Please choose a location'), // Not necessary for Option 1
                     value: selectedCategory,
@@ -110,7 +110,7 @@ class _ConfirmScreenState extends State<ConfirmScreen> {
                   //dropdownContainer(context),
 
                   Container(
-                    margin: EdgeInsets.all(20),
+                    margin: const EdgeInsets.all(20),
                     child: SubmitButton(text: "Upload", onPress: (){
                           Utilities.showToast("Video uploaded successfully");
                         Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (_)=>const VideoListScreen()));
